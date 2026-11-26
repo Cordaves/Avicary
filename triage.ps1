@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-  Cordaves Avicary — Read-only Windows triage probe for remote support sessions.
+  Cordaves Avicary - Read-only Windows triage probe for remote support sessions.
 .DESCRIPTION
   Collects system specs, RAM/pagefile pressure, internal & external USB drives
   (with physical-to-letter mapping and USB Selective Suspend check), disk health
@@ -8,7 +8,7 @@
   Reliability Monitor records, InDesign/CS6 bonus checks (recent .indd paths,
   missing/swapped drive letters, orphaned .idlk lock files, crash recovery files),
   backup readiness with a ready-to-copy safe robocopy command, and top RAM
-  processes — strictly read-only, without modifying system settings or running
+  processes - strictly read-only, without modifying system settings or running
   slow recursive scans across external drives.
 
   Saves a UTF-8 (BOM) report to the Desktop and copies it to the clipboard.
