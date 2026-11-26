@@ -19,7 +19,7 @@ Styled with the Cordaves palette (**Deep blue `#0135A8`** main accent — Logo B
      ```powershell
      irm 'https://cordaves.github.io/Avicary/triage.ps1' | iex
      ```
-   - Prüft Arbeitsspeicher, Auslagerungsdatei, interne & externe USB-Laufwerke, Festplatten-Status, `disk`/`ntfs`/`usb`/`Kernel-Power`-Ereignisse (14 Tage), Programm-Abstürze/-Hänger, Zuverlässigkeitsverlauf, laufende Adobe-Prozesse und Top-RAM-Verbraucher.
+   - Prüft Arbeitsspeicher, Auslagerungsdatei, interne & externe USB-Laufwerke (inkl. Zuordnung physische USB-HDD → Laufwerksbuchstabe & USB-Energiesparmodus), Festplatten-Status, `disk`/`ntfs`/`usb`/`Kernel-Power`-Ereignisse (14 Tage), Programm-Abstürze/-Hänger, Zuverlässigkeitsverlauf, InDesign/CS6-Bonuschecks (zuletzt geöffnete `.indd`-Pfade & fehlende Laufwerksbuchstaben, verwaiste `.idlk`-Sperrdateien, Absturz-Wiederherstellung), Backup-Bereitschaft (inkl. fertigem `robocopy /R:1 /W:1`-Befehl) und Top-RAM-Verbraucher.
    - Verändert nichts am System und durchsucht keine persönlichen Benutzerdateien.
    - Speichert `Avicary-Bericht-YYYYMMDD-HHMM.txt` auf dem Desktop und kopiert den Bericht in die Zwischenablage.
 
