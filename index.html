@@ -387,6 +387,20 @@
       font-size: 0.94rem;
     }
 
+    .helper-lang-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0 10px;
+    }
+
+    .helper-lang-label {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
     .muted-p { color: var(--muted); }
     .small-muted { margin-top: 12px; color: var(--muted); font-size: 0.9rem; }
 
@@ -595,6 +609,13 @@
       <summary class="helper-summary" id="t-helper-sum">Für den Helfer: Avicary-Diagnose nach dem Verbinden</summary>
       <div class="details-body">
         <p id="t-helper-desc"></p>
+        <div class="helper-lang-row">
+          <span class="helper-lang-label" id="t-report-lang-label">Berichtssprache:</span>
+          <div class="seg-group" role="group" aria-label="Berichtssprache / Report language">
+            <button type="button" class="util-btn" id="report-lang-de" aria-pressed="true">Deutsch (DE)</button>
+            <button type="button" class="util-btn" id="report-lang-en" aria-pressed="false">English (EN)</button>
+          </div>
+        </div>
         <div id="helper-cmd" class="code-box"></div>
         <div class="btn-row">
           <button type="button" class="btn-secondary" id="copy-helper">Befehl kopieren</button>
@@ -640,9 +661,10 @@
           winUpdate: "Windows-Update",
           helperSum: "Für den Helfer: Avicary-Diagnose nach dem Verbinden",
           helperDesc: "Erst ausführen, <strong>nachdem Sie per Remotehilfe verbunden sind</strong>. Öffnen Sie auf dem Ziel-PC <strong>PowerShell</strong> (kein Admin nötig) und führen Sie diesen Nur-Lese-Befehl aus:",
+          reportLangLabel: "Berichtssprache:",
           copyHelper: "Befehl kopieren",
           helperSrc: "Skript-Quelltext ansehen (triage.ps1)",
-          helperNote: "Das Skript liest ausschließlich Systeminfos, Speicherplatz, USB-/Festplattenstatus, Ereignisprotokolle (14 Tage) sowie InDesign- & Backup-Bereitschaft aus, speichert <code>Avicary-Bericht-….txt</code> auf dem Desktop und kopiert den Bericht in die Zwischenablage.",
+          helperNote: "Das Skript liest ausschließlich Systeminfos, Speicherplatz, USB-/Festplattenstatus, Ereignisprotokolle (14 Tage) sowie InDesign- & Backup-Bereitschaft aus, speichert <code>{file}</code> auf dem Desktop und kopiert den Bericht in die Zwischenablage.",
           footer: "<strong>Avicary</strong> · Cordaves · Rein lokale Hilfeseite · Keine Cookies · Keine Datenübertragung an Dritte",
           themeToDark: "Dunkel",
           themeToLight: "Hell",
@@ -703,9 +725,10 @@
           winUpdate: "Windows Update",
           helperSum: "For the helper: Avicary read-only triage after connecting",
           helperDesc: "Run only <strong>after you are connected via Quick Assist</strong>. Open <strong>PowerShell</strong> on the target PC (no Admin needed) and run this read-only command:",
+          reportLangLabel: "Report language:",
           copyHelper: "Copy command",
           helperSrc: "View script source (triage.ps1)",
-          helperNote: "The script only reads system specs, disk & USB drive health, the last 14 days of event logs, plus InDesign & backup readiness, saves <code>Avicary-Bericht-….txt</code> to the Desktop, and copies the report to the clipboard.",
+          helperNote: "The script only reads system specs, disk & USB drive health, the last 14 days of event logs, plus InDesign & backup readiness, saves <code>{file}</code> to the Desktop, and copies the report to the clipboard.",
           footer: "<strong>Avicary</strong> · Cordaves · Static local helper page · No cookies · No third-party data transfer",
           themeToDark: "Dark",
           themeToLight: "Light",
@@ -742,6 +765,13 @@
       const params = new URLSearchParams(window.location.search);
       let currentLang = params.get("lang") === "en" ? "en" : "de";
       let currentTheme = params.get("theme") === "dark" ? "dark" : "light";
+      const reportParam = (params.get("report") || params.get("reportLang") || "").toLowerCase();
+      let reportLangManual = reportParam === "en" || reportParam === "de";
+      let reportLang = reportLangManual ? reportParam : currentLang;
+
+      const baseUrl = window.location.href.split(/[?#]/)[0].replace(/index\.html$/i, "");
+      const scriptUrl = (baseUrl.endsWith("/") ? baseUrl : baseUrl + "/") + "triage.ps1";
+      let helperCommand = "";
 
       const ua = navigator.userAgent || "";
       const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
@@ -854,6 +884,18 @@
         }
       }
 
+      function applyReportLang(lang) {
+        reportLang = lang === "en" ? "en" : "de";
+        document.getElementById("report-lang-de").setAttribute("aria-pressed", reportLang === "de" ? "true" : "false");
+        document.getElementById("report-lang-en").setAttribute("aria-pressed", reportLang === "en" ? "true" : "false");
+        helperCommand = reportLang === "en"
+          ? "$AvicaryLang='en'; irm '" + scriptUrl + "' | iex"
+          : "irm '" + scriptUrl + "' | iex";
+        document.getElementById("helper-cmd").textContent = helperCommand;
+        const reportFile = reportLang === "en" ? "Avicary-Report-….txt" : "Avicary-Bericht-….txt";
+        document.getElementById("t-helper-note").innerHTML = I18N[currentLang].helperNote.replace("{file}", reportFile);
+      }
+
       function applyLang(lang) {
         currentLang = lang;
         const t = I18N[lang];
@@ -889,11 +931,15 @@
         document.getElementById("t-win-update").textContent = t.winUpdate;
         document.getElementById("t-helper-sum").textContent = t.helperSum;
         document.getElementById("t-helper-desc").innerHTML = t.helperDesc;
+        document.getElementById("t-report-lang-label").textContent = t.reportLangLabel;
         document.getElementById("copy-helper").textContent = t.copyHelper;
         document.getElementById("t-helper-src").textContent = t.helperSrc;
-        document.getElementById("t-helper-note").innerHTML = t.helperNote;
         document.getElementById("t-footer").innerHTML = t.footer;
 
+        if (!reportLangManual) {
+          reportLang = lang;
+        }
+        applyReportLang(reportLang);
         applyTheme(currentTheme);
         renderProbe();
       }
@@ -918,11 +964,6 @@
           renderProbe();
         }).catch(function () {});
       }
-
-      const baseUrl = window.location.href.split(/[?#]/)[0].replace(/index\.html$/i, "");
-      const scriptUrl = (baseUrl.endsWith("/") ? baseUrl : baseUrl + "/") + "triage.ps1";
-      const helperCommand = "irm '" + scriptUrl + "' | iex";
-      document.getElementById("helper-cmd").textContent = helperCommand;
 
       function copyText(text, statusEl) {
         const t = I18N[currentLang];
@@ -958,6 +999,14 @@
 
       document.getElementById("lang-de").addEventListener("click", function () { applyLang("de"); });
       document.getElementById("lang-en").addEventListener("click", function () { applyLang("en"); });
+      document.getElementById("report-lang-de").addEventListener("click", function () {
+        reportLangManual = true;
+        applyReportLang("de");
+      });
+      document.getElementById("report-lang-en").addEventListener("click", function () {
+        reportLangManual = true;
+        applyReportLang("en");
+      });
       document.getElementById("theme-toggle").addEventListener("click", function () {
         applyTheme(currentTheme === "dark" ? "light" : "dark");
       });

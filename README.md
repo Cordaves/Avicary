@@ -15,13 +15,18 @@ Styled with the Cordaves palette (**Deep blue `#0135A8`** main accent — Logo B
    - Kein Download, keine Installation, keine SmartScreen-Warnung.
    - Enthält einen rein lokalen Browser-Kurzcheck (OS, Bildschirm-Skalierung, Grafik, Systemzeit) sowie Fallback-Anleitungen und Direktlinks zu Windows-Einstellungen (`ms-settings:`).
 2. **Nur-Lese-Diagnose für den Helfer (`triage.ps1`)**
-   - Erst ausführen, **nachdem** Sie per Remotehilfe verbunden sind (PowerShell öffnen, kein Admin nötig):
+   - Erst ausführen, **nachdem** Sie per Remotehilfe verbunden sind (PowerShell öffnen, kein Admin nötig) – wahlweise auf **Deutsch** oder **Englisch** (direkt auf der Seite umschaltbar):
      ```powershell
+     # Deutsch (Standard)
      irm 'https://cordaves.github.io/Avicary/triage.ps1' | iex
+
+     # English
+     $AvicaryLang='en'; irm 'https://cordaves.github.io/Avicary/triage.ps1' | iex
      ```
+     (Bei lokaler Ausführung auch direkt per `.\triage.ps1 -Lang en` oder `.\triage.ps1 -Lang de` steuerbar.)
    - Prüft Arbeitsspeicher, Auslagerungsdatei, interne & externe USB-Laufwerke (inkl. Zuordnung physische USB-HDD → Laufwerksbuchstabe & USB-Energiesparmodus), Festplatten-Status, `disk`/`ntfs`/`usb`/`Kernel-Power`-Ereignisse (14 Tage), Programm-Abstürze/-Hänger, Zuverlässigkeitsverlauf, InDesign/CS6-Bonuschecks (zuletzt geöffnete `.indd`-Pfade & fehlende Laufwerksbuchstaben, verwaiste `.idlk`-Sperrdateien, Absturz-Wiederherstellung), Backup-Bereitschaft (inkl. fertigem `robocopy /R:1 /W:1`-Befehl) und Top-RAM-Verbraucher.
    - Verändert nichts am System und durchsucht keine persönlichen Benutzerdateien.
-   - Speichert `Avicary-Bericht-YYYYMMDD-HHMM.txt` auf dem Desktop und kopiert den Bericht in die Zwischenablage.
+   - Speichert `Avicary-Bericht-YYYYMMDD-HHMM.txt` (DE) bzw. `Avicary-Report-YYYYMMDD-HHMM.txt` (EN) auf dem Desktop und kopiert den Bericht in die Zwischenablage.
 
 ## Auf GitHub Pages veröffentlichen
 
