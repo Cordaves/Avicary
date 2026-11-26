@@ -65,57 +65,40 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 22px;
+      gap: 16px;
+      margin-bottom: 24px;
       padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
     }
 
+    /* logo-lockup: symbol = 1.5x cap height + overshoot, centred on cap band, gap = symbol / 4 */
     .brand-left {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 11px;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       flex-shrink: 0;
       display: block;
     }
 
-    .brand-titles {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
-    }
-
     .brand-name {
       font-weight: 800;
-      font-size: 1.3rem;
+      font-size: 1.65rem;
       letter-spacing: -0.02em;
       color: var(--ink);
+      line-height: 1;
     }
 
-    .brand-by {
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .brand-cordaves {
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
       color: var(--muted);
-      margin-top: 2px;
-    }
-
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 11px;
-      border-radius: 999px;
-      background: var(--deep-blue-soft);
-      color: var(--deep-blue);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
+      line-height: 1;
     }
 
     h1 {
@@ -362,7 +345,6 @@
       body { padding: 14px 12px 36px; font-size: 17px; }
       .card { padding: 22px 20px; }
       .btn-primary { font-size: 1.15rem; padding: 18px 18px; }
-      .brand-badge { display: none; }
     }
   </style>
 </head>
@@ -372,19 +354,17 @@
     <section class="card">
       <div class="brand-lockup">
         <div class="brand-left">
-          <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Avicary Logo">
-            <polygon fill="#1A2440" points="33.5,6 56,56 44.5,56 31.2,24.5" />
-            <polygon fill="#02592A" points="30.6,7.5 29.5,20.2 25.4,28.2 14.5,31.2" />
-            <polygon fill="#0135A8" points="24.5,31.2 22.0,39.0 9.5,41.6 13.4,34.0" />
-            <polygon fill="#531395" points="35.6,39.5 38.6,45.8 7.5,49.8 11.4,43.8" />
-            <polygon fill="#B0122E" points="29.8,49.6 24.8,56 8.0,56 9.6,52.4" />
+          <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Avicary Logo">
+            <path fill="#02592A" d="M 135 40 C 114 45 97 65 89 90 L 118 103 L 135 40 Z" />
+            <path fill="#131313" d="M 142 40 L 204 198 C 195 175 179 149 157 127 L 128 89 L 142 40 Z" />
+            <path fill="#131313" d="M 159 170 L 199 200 L 171 200 L 159 170 Z" />
+            <path fill="#0135A8" d="M 34 69 C 68 86 112 106 146 128 C 172 145 190 170 202 200 C 180 176 154 156 122 142 C 80 124 52 104 34 69 Z" />
+            <path fill="#531395" d="M 75 130 C 96 142 122 153 148 164 C 118 161 88 166 57 179 L 75 130 Z" />
+            <path fill="#B0122E" d="M 54 187 C 68 182 81 178 94 176 L 83 200 L 48 200 L 54 187 Z" />
           </svg>
-          <div class="brand-titles">
-            <span class="brand-name">Avicary</span>
-            <span class="brand-by">by Cordaves</span>
-          </div>
+          <span class="brand-name">Avicary</span>
         </div>
-        <span class="brand-badge">Diagnose · Nur Lesezugriff</span>
+        <span class="brand-cordaves">Cordaves</span>
       </div>
 
       <h1>Schnelle Computer-Hilfe</h1>
