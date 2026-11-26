@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="avicary-logo.svg">
   <style>
-    /* Cordaves Palette — Deep Blue (#0135A8, Logo Blade 2) primary accent on Paper */
+    /* Official Cordaves Palette — Deep Blue (#0135A8) primary accent on Paper (#F8FAF7) */
     :root {
       --paper: #f8faf7;
       --surface: #ffffff;
@@ -20,27 +20,58 @@
       --deep-blue-hover: #012880;
       --deep-blue-soft: #e9effc;
       --deep-blue-ring: rgba(1, 53, 168, 0.25);
-      --navy: #1a2440;
+      --step-text: #0135a8;
+      --code-bg: #1a2440;
+      --code-fg: #f3f1ec;
       --ok-bg: #eef7f2;
       --ok-border: #bddac9;
       --ok-text: #02592a;
       --warn-bg: #fdf6e9;
       --warn-border: #e6c68a;
       --warn-text: #6e4508;
+      --shadow-card: 0 4px 20px rgba(26, 36, 64, 0.055);
+      --shadow-btn: 0 6px 18px rgba(1, 53, 168, 0.26);
       --radius: 16px;
+    }
+
+    /* Official Cordaves Dark Surface — Navy (#1A2440) with Dark A white-keyline logo */
+    [data-theme="dark"] {
+      --paper: #1a2440;
+      --surface: #121a30;
+      --surface-soft: #1d2948;
+      --border: #2e3d66;
+      --ink: #f3f1ec;
+      --text: #f3f1ec;
+      --muted: #cdcfd4;
+      --deep-blue: #1f5ce0;
+      --deep-blue-hover: #2d6cf0;
+      --deep-blue-soft: #23335c;
+      --deep-blue-ring: rgba(94, 146, 255, 0.35);
+      --step-text: #9ec0ff;
+      --code-bg: #0e0f12;
+      --code-fg: #f3f1ec;
+      --ok-bg: #102a20;
+      --ok-border: #245c44;
+      --ok-text: #b7ebd0;
+      --warn-bg: #2e2412;
+      --warn-border: #735622;
+      --warn-text: #f5d89a;
+      --shadow-card: 0 8px 28px rgba(6, 9, 18, 0.35);
+      --shadow-btn: 0 6px 20px rgba(8, 18, 48, 0.45);
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 28px 16px 52px;
+      padding: 20px 16px 52px;
       font-family: "Archivo", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
       background: var(--paper);
       color: var(--text);
       font-size: 19px;
       line-height: 1.55;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.18s ease, color 0.18s ease;
     }
 
     main {
@@ -52,12 +83,78 @@
       gap: 18px;
     }
 
+    /* Quiet utility bar above card (keeps brand header spotless) */
+    .util-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .seg-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .util-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px 12px;
+      border-radius: 7px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .util-btn:hover {
+      color: var(--ink);
+      background: var(--surface-soft);
+    }
+
+    .util-btn:focus-visible {
+      outline: 3px solid var(--deep-blue-ring);
+      outline-offset: 1px;
+    }
+
+    .util-btn[aria-pressed="true"] {
+      background: var(--deep-blue-soft);
+      color: var(--step-text);
+    }
+
+    .theme-btn {
+      min-height: 44px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .theme-btn:hover {
+      background: var(--surface-soft);
+      border-color: var(--deep-blue);
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 32px 30px;
-      box-shadow: 0 4px 20px rgba(26, 36, 64, 0.055);
+      box-shadow: var(--shadow-card);
       overflow-wrap: break-word;
     }
 
@@ -83,6 +180,15 @@
       height: 44px;
       flex-shrink: 0;
       display: block;
+    }
+
+    /* Cordaves Dark A hybrid rule: white outer circumference on dark, original fills preserved */
+    [data-theme="dark"] .brand-mark g {
+      stroke: #ffffff;
+      stroke-width: 4.4;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      paint-order: stroke fill;
     }
 
     .brand-name {
@@ -155,7 +261,7 @@
       letter-spacing: -0.01em;
       border: none;
       cursor: pointer;
-      box-shadow: 0 6px 18px rgba(1, 53, 168, 0.26);
+      box-shadow: var(--shadow-btn);
       transition: background 0.15s ease, transform 0.08s ease;
     }
 
@@ -173,7 +279,8 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 11px 17px;
+      min-height: 44px;
+      padding: 10px 17px;
       border-radius: 10px;
       background: var(--surface-soft);
       color: var(--text);
@@ -214,7 +321,7 @@
       height: 36px;
       border-radius: 50%;
       background: var(--deep-blue-soft);
-      color: var(--deep-blue);
+      color: var(--step-text);
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -274,11 +381,21 @@
       font-size: 0.96rem;
     }
 
+    .helper-summary {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.94rem;
+    }
+
+    .muted-p { color: var(--muted); }
+    .small-muted { margin-top: 12px; color: var(--muted); font-size: 0.9rem; }
+
     .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 12px;
+      align-items: center;
     }
 
     .probe-grid {
@@ -311,8 +428,9 @@
     }
 
     .code-box {
-      background: var(--navy);
-      color: #f3f1ec;
+      background: var(--code-bg);
+      color: var(--code-fg);
+      border: 1px solid var(--border);
       padding: 14px 16px;
       border-radius: 10px;
       font-family: ui-monospace, Consolas, monospace;
@@ -326,7 +444,7 @@
       font-size: 0.92rem;
       color: var(--ok-text);
       font-weight: 600;
-      margin-left: 8px;
+      margin-left: 4px;
     }
 
     .footer-note {
@@ -337,7 +455,7 @@
     }
 
     .footer-note strong {
-      color: var(--deep-blue);
+      color: var(--step-text);
       font-weight: 700;
     }
 
@@ -350,32 +468,47 @@
 </head>
 <body>
   <main>
+    <!-- Dezente Sprach- & Hell/Dunkel-Schalter -->
+    <div class="util-bar" role="region" aria-label="Darstellung und Sprache">
+      <div class="seg-group" role="group" aria-label="Language / Sprache">
+        <button type="button" class="util-btn" id="lang-de" aria-pressed="true">DE</button>
+        <button type="button" class="util-btn" id="lang-en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="util-btn theme-btn" id="theme-toggle" aria-pressed="false">
+        <svg id="theme-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <span id="theme-label">Dunkel</span>
+      </button>
+    </div>
+
     <!-- Hauptkarte -->
     <section class="card">
       <div class="brand-lockup">
         <div class="brand-left">
           <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Avicary Logo">
-            <path fill="#02592A" d="M 135 40 C 114 45 97 65 89 90 L 118 103 L 135 40 Z" />
-            <path fill="#131313" d="M 142 40 L 204 198 C 195 175 179 149 157 127 L 128 89 L 142 40 Z" />
-            <path fill="#131313" d="M 159 170 L 199 200 L 171 200 L 159 170 Z" />
-            <path fill="#0135A8" d="M 34 69 C 68 86 112 106 146 128 C 172 145 190 170 202 200 C 180 176 154 156 122 142 C 80 124 52 104 34 69 Z" />
-            <path fill="#531395" d="M 75 130 C 96 142 122 153 148 164 C 118 161 88 166 57 179 L 75 130 Z" />
-            <path fill="#B0122E" d="M 54 187 C 68 182 81 178 94 176 L 83 200 L 48 200 L 54 187 Z" />
+            <g>
+              <path fill="#02592A" d="M 135 40 C 114 45 97 65 89 90 L 118 103 L 135 40 Z" />
+              <path fill="#131313" d="M 142 40 L 204 198 C 195 175 179 149 157 127 L 128 89 L 142 40 Z" />
+              <path fill="#131313" d="M 159 170 L 199 200 L 171 200 L 159 170 Z" />
+              <path fill="#0135A8" d="M 34 69 C 68 86 112 106 146 128 C 172 145 190 170 202 200 C 180 176 154 156 122 142 C 80 124 52 104 34 69 Z" />
+              <path fill="#531395" d="M 75 130 C 96 142 122 153 148 164 C 118 161 88 166 57 179 L 75 130 Z" />
+              <path fill="#B0122E" d="M 54 187 C 68 182 81 178 94 176 L 83 200 L 48 200 L 54 187 Z" />
+            </g>
           </svg>
           <span class="brand-name">Avicary</span>
         </div>
         <span class="brand-cordaves">Cordaves</span>
       </div>
 
-      <h1>Schnelle Computer-Hilfe</h1>
-      <p class="subtitle">
+      <h1 id="t-heading">Schnelle Computer-Hilfe</h1>
+      <p class="subtitle" id="t-subtitle">
         Sichere Bildschirm-Hilfe über die eingebaute Windows-Funktion – ohne Download und ohne Installation.
       </p>
 
       <!-- Hinweis bei Mobilgerät -->
       <div id="mobile-banner" class="banner hidden" role="alert">
-        <strong>Hinweis:</strong> Sie öffnen diese Seite gerade auf einem Handy oder Tablet.<br>
-        Bitte öffnen Sie diesen Link am <strong>Windows-Computer bzw. Notebook</strong>, damit die Remotehilfe direkt starten kann.
+        <div id="t-mobile-text"></div>
         <div class="btn-row">
           <button type="button" class="btn-secondary" id="copy-page-url">Link dieser Seite kopieren</button>
           <span id="copy-url-status" class="status-note" aria-live="polite"></span>
@@ -384,7 +517,7 @@
 
       <!-- Hinweis bei Mac / Linux -->
       <div id="nonwin-banner" class="banner hidden" role="status">
-        <strong>Hinweis:</strong> Diese Seite wurde nicht auf einem Windows-Computer geöffnet. Die eingebaute <em>Windows-Remotehilfe</em> funktioniert nur unter Windows 10 oder Windows 11. Unten können Sie trotzdem den kurzen Geräte-Check kopieren.
+        <div id="t-nonwin-text"></div>
       </div>
 
       <!-- Hauptknopf -->
@@ -395,59 +528,47 @@
             <line x1="8" y1="21" x2="16" y2="21"></line>
             <line x1="12" y1="17" x2="12" y2="21"></line>
           </svg>
-          <span>Remotehilfe starten</span>
+          <span id="t-cta">Remotehilfe starten</span>
         </a>
 
         <ol class="steps">
           <li>
             <span class="step-num">1</span>
-            <div>Klicken Sie oben auf <strong>„Remotehilfe starten“</strong>.</div>
+            <div id="t-step-1"></div>
           </li>
           <li>
             <span class="step-num">2</span>
-            <div>Ihr Browser fragt kurz <em>„Remotehilfe öffnen?“</em> – klicken Sie dort auf <strong>„Öffnen“</strong>.</div>
+            <div id="t-step-2"></div>
           </li>
           <li>
             <span class="step-num">3</span>
-            <div>Tippen Sie den <strong>6-stelligen Code</strong> ein, den ich Ihnen am Telefon sage, und bestätigen Sie mit <strong>„Zulassen“</strong>.</div>
+            <div id="t-step-3"></div>
           </li>
         </ol>
       </div>
 
-      <div class="banner ok">
-        <strong>Sicher &amp; transparent:</strong> Sie sehen die ganze Zeit alles auf Ihrem Bildschirm mit und können die Verbindung jederzeit sofort beenden. Es wird nichts dauerhaft installiert.
-      </div>
+      <div class="banner ok" id="t-trust"></div>
     </section>
 
     <!-- Fallback bei Problemen -->
     <details>
-      <summary>Falls sich beim Klicken nichts öffnet</summary>
+      <summary id="t-fb-sum">Falls sich beim Klicken nichts öffnet</summary>
       <div class="details-body">
-        <p>
-          <strong>Möglichkeit 1 (Tastatur):</strong> Drücken Sie gleichzeitig
-          <kbd>Windows-Taste</kbd> + <kbd>Strg</kbd> + <kbd>Q</kbd>.
-        </p>
-        <p>
-          <strong>Möglichkeit 2 (Startmenü):</strong> Drücken Sie die <kbd>Windows-Taste</kbd>, tippen Sie
-          <strong>Remotehilfe</strong> ein und drücken Sie <kbd>Enter</kbd>.
-        </p>
-        <p>
-          <strong>Möglichkeit 3 (Update aus dem Microsoft Store):</strong> Falls Windows meldet, dass die App fehlt oder aktualisiert werden muss, öffnen Sie sie direkt im offiziellen Microsoft Store:
-        </p>
+        <p id="t-fb-1"></p>
+        <p id="t-fb-2"></p>
+        <p id="t-fb-3"></p>
         <div class="btn-row">
-          <a href="ms-windows-store://pdp/?ProductId=9P7BP5VNWKX5" class="btn-secondary">Im Microsoft Store öffnen</a>
-          <a href="https://apps.microsoft.com/detail/9p7bp5vnwkx5" target="_blank" rel="noopener noreferrer" class="btn-secondary">Store-Seite im Browser</a>
+          <a href="ms-windows-store://pdp/?ProductId=9P7BP5VNWKX5" class="btn-secondary" id="t-store-app">Im Microsoft Store öffnen</a>
+          <a href="https://apps.microsoft.com/detail/9p7bp5vnwkx5" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="t-store-web">Store-Seite im Browser</a>
         </div>
       </div>
     </details>
 
     <!-- Passiver Browser-Kurzcheck -->
     <details>
-      <summary>Kurz-Check dieses Geräts (nur Lesezugriff im Browser)</summary>
+      <summary id="t-probe-sum">Kurz-Check dieses Geräts (nur Lesezugriff im Browser)</summary>
       <div class="details-body">
-        <p style="color: var(--muted);">
-          Diese Basisdaten zeigt Ihr Browser von selbst an. Nichts davon wird automatisch versendet – erst wenn Sie unten auf „Kopieren“ klicken, liegt der Text in Ihrer Zwischenablage.
-        </p>
+        <p class="muted-p" id="t-probe-desc"></p>
         <div id="probe-grid" class="probe-grid"></div>
         <div class="btn-row">
           <button type="button" class="btn-secondary" id="copy-probe">Kurz-Check kopieren</button>
@@ -458,45 +579,170 @@
 
     <!-- Hilfreiche Windows-Einstellungen -->
     <details id="win-shortcuts">
-      <summary>Direktlinks zu Windows-Einstellungen (falls wir sie gemeinsam prüfen)</summary>
+      <summary id="t-win-sum">Direktlinks zu Windows-Einstellungen (falls wir sie gemeinsam prüfen)</summary>
       <div class="details-body">
-        <p style="color: var(--muted);">
-          Mit einem Klick öffnen sich die jeweiligen Windows-Einstellungen direkt, ohne Suchen im Menü:
-        </p>
+        <p class="muted-p" id="t-win-desc"></p>
         <div class="btn-row">
-          <a href="ms-settings:storagesense" class="btn-secondary">Speicherplatz prüfen</a>
-          <a href="ms-settings:about" class="btn-secondary">System-Infos anzeigen</a>
-          <a href="ms-settings:windowsupdate" class="btn-secondary">Windows-Update</a>
+          <a href="ms-settings:storagesense" class="btn-secondary" id="t-win-storage">Speicherplatz prüfen</a>
+          <a href="ms-settings:about" class="btn-secondary" id="t-win-about">System-Infos anzeigen</a>
+          <a href="ms-settings:windowsupdate" class="btn-secondary" id="t-win-update">Windows-Update</a>
         </div>
       </div>
     </details>
 
     <!-- Nur für den Helfer -->
     <details>
-      <summary style="color: var(--muted); font-weight: 500; font-size: 0.94rem;">Für den Helfer: Avicary-Diagnose nach dem Verbinden</summary>
+      <summary class="helper-summary" id="t-helper-sum">Für den Helfer: Avicary-Diagnose nach dem Verbinden</summary>
       <div class="details-body">
-        <p>
-          Erst ausführen, <strong>nachdem Sie per Remotehilfe verbunden sind</strong>. Öffnen Sie auf dem Ziel-PC <strong>PowerShell</strong> (kein Admin nötig) und führen Sie diesen Nur-Lese-Befehl aus:
-        </p>
+        <p id="t-helper-desc"></p>
         <div id="helper-cmd" class="code-box"></div>
         <div class="btn-row">
           <button type="button" class="btn-secondary" id="copy-helper">Befehl kopieren</button>
-          <a href="triage.ps1" target="_blank" rel="noopener noreferrer" class="btn-secondary">Skript-Quelltext ansehen (triage.ps1)</a>
+          <a href="triage.ps1" target="_blank" rel="noopener noreferrer" class="btn-secondary" id="t-helper-src">Skript-Quelltext ansehen (triage.ps1)</a>
           <span id="copy-helper-status" class="status-note" aria-live="polite"></span>
         </div>
-        <p style="margin-top: 12px; color: var(--muted); font-size: 0.9rem;">
-          Das Skript liest ausschließlich Systeminfos, Speicherplatz, Festplattenstatus und die Ereignisprotokolle der letzten 14 Tage aus, speichert <code>Avicary-Bericht-….txt</code> auf dem Desktop und kopiert den Bericht in die Zwischenablage.
-        </p>
+        <p class="small-muted" id="t-helper-note"></p>
       </div>
     </details>
 
-    <p class="footer-note">
-      <strong>Avicary</strong> · Cordaves · Rein lokale Hilfeseite · Keine Cookies · Keine Datenübertragung an Dritte
-    </p>
+    <p class="footer-note" id="t-footer"></p>
   </main>
 
   <script>
     (function () {
+      const I18N = {
+        de: {
+          title: "Avicary · Cordaves – Schnelle Computer-Hilfe",
+          heading: "Schnelle Computer-Hilfe",
+          subtitle: "Sichere Bildschirm-Hilfe über die eingebaute Windows-Funktion – ohne Download und ohne Installation.",
+          cta: "Remotehilfe starten",
+          step1: "Klicken Sie oben auf <strong>„Remotehilfe starten“</strong>.",
+          step2: "Ihr Browser fragt kurz <em>„Remotehilfe öffnen?“</em> – klicken Sie dort auf <strong>„Öffnen“</strong>.",
+          step3: "Tippen Sie den <strong>6-stelligen Code</strong> ein, den ich Ihnen am Telefon sage, und bestätigen Sie mit <strong>„Zulassen“</strong>.",
+          trust: "<strong>Sicher &amp; transparent:</strong> Sie sehen die ganze Zeit alles auf Ihrem Bildschirm mit und können die Verbindung jederzeit sofort beenden. Es wird nichts dauerhaft installiert.",
+          mobile: "<strong>Hinweis:</strong> Sie öffnen diese Seite gerade auf einem Handy oder Tablet.<br>Bitte öffnen Sie diesen Link am <strong>Windows-Computer bzw. Notebook</strong>, damit die Remotehilfe direkt starten kann.",
+          copyUrl: "Link dieser Seite kopieren",
+          nonwin: "<strong>Hinweis:</strong> Diese Seite wurde nicht auf einem Windows-Computer geöffnet. Die eingebaute <em>Windows-Remotehilfe</em> funktioniert nur unter Windows 10 oder Windows 11. Unten können Sie trotzdem den kurzen Geräte-Check kopieren.",
+          fbSum: "Falls sich beim Klicken nichts öffnet",
+          fb1: "<strong>Möglichkeit 1 (Tastatur):</strong> Drücken Sie gleichzeitig <kbd>Windows-Taste</kbd> + <kbd>Strg</kbd> + <kbd>Q</kbd>.",
+          fb2: "<strong>Möglichkeit 2 (Startmenü):</strong> Drücken Sie die <kbd>Windows-Taste</kbd>, tippen Sie <strong>Remotehilfe</strong> ein und drücken Sie <kbd>Enter</kbd>.",
+          fb3: "<strong>Möglichkeit 3 (Update aus dem Microsoft Store):</strong> Falls Windows meldet, dass die App fehlt oder aktualisiert werden muss, öffnen Sie sie direkt im offiziellen Microsoft Store:",
+          storeApp: "Im Microsoft Store öffnen",
+          storeWeb: "Store-Seite im Browser",
+          probeSum: "Kurz-Check dieses Geräts (nur Lesezugriff im Browser)",
+          probeDesc: "Diese Basisdaten zeigt Ihr Browser von selbst an. Nichts davon wird automatisch versendet – erst wenn Sie unten auf „Kopieren“ klicken, liegt der Text in Ihrer Zwischenablage.",
+          copyProbe: "Kurz-Check kopieren",
+          probeHeader: "=== AVICARY BROWSER KURZ-CHECK ===",
+          winSum: "Direktlinks zu Windows-Einstellungen (falls wir sie gemeinsam prüfen)",
+          winDesc: "Mit einem Klick öffnen sich die jeweiligen Windows-Einstellungen direkt, ohne Suchen im Menü:",
+          winStorage: "Speicherplatz prüfen",
+          winAbout: "System-Infos anzeigen",
+          winUpdate: "Windows-Update",
+          helperSum: "Für den Helfer: Avicary-Diagnose nach dem Verbinden",
+          helperDesc: "Erst ausführen, <strong>nachdem Sie per Remotehilfe verbunden sind</strong>. Öffnen Sie auf dem Ziel-PC <strong>PowerShell</strong> (kein Admin nötig) und führen Sie diesen Nur-Lese-Befehl aus:",
+          copyHelper: "Befehl kopieren",
+          helperSrc: "Skript-Quelltext ansehen (triage.ps1)",
+          helperNote: "Das Skript liest ausschließlich Systeminfos, Speicherplatz, Festplattenstatus und die Ereignisprotokolle der letzten 14 Tage aus, speichert <code>Avicary-Bericht-….txt</code> auf dem Desktop und kopiert den Bericht in die Zwischenablage.",
+          footer: "<strong>Avicary</strong> · Cordaves · Rein lokale Hilfeseite · Keine Cookies · Keine Datenübertragung an Dritte",
+          themeToDark: "Dunkel",
+          themeToLight: "Hell",
+          copied: "✓ Kopiert!",
+          copyFallback: "Bitte manuell markieren & kopieren.",
+          labels: {
+            system: "System",
+            browser: "Browser",
+            screen: "Bildschirm",
+            cpu: "CPU-Kerne",
+            ram: "RAM (Browser-Angabe)",
+            gpu: "Grafik",
+            net: "Verbindung",
+            clock: "Systemzeit",
+            power: "Stromversorgung"
+          },
+          vals: {
+            unknown: "Unbekannt",
+            unknownBrowser: "Unbekannter Browser",
+            na: "Nicht verfügbar",
+            unreported: "Nicht gemeldet",
+            scale: "Skalierung",
+            cores: "Kerne",
+            ramApprox: "ca. {n} GB (max. 8 GB sichtbar)",
+            online: "Online",
+            offline: "Offline",
+            charging: "Netzbetrieb / lädt",
+            battery: "Akkubetrieb",
+            locale: "de-DE"
+          }
+        },
+        en: {
+          title: "Avicary · Cordaves – Quick Computer Help",
+          heading: "Quick Computer Help",
+          subtitle: "Secure screen sharing using Windows' built-in Quick Assist — no downloads and no installation.",
+          cta: "Start Quick Assist",
+          step1: "Click <strong>“Start Quick Assist”</strong> above.",
+          step2: "Your browser will ask <em>“Open Quick Assist?”</em> — click <strong>“Open”</strong>.",
+          step3: "Enter the <strong>6-digit code</strong> I read you over the phone, then click <strong>“Allow”</strong>.",
+          trust: "<strong>Safe &amp; transparent:</strong> You can watch everything on your screen the entire time and end the session with a single click. Nothing is permanently installed.",
+          mobile: "<strong>Note:</strong> You are viewing this page on a phone or tablet.<br>Please open this link on your <strong>Windows PC or laptop</strong> so Windows Quick Assist can launch directly.",
+          copyUrl: "Copy page link",
+          nonwin: "<strong>Note:</strong> This page was not opened on a Windows PC. Built-in <em>Windows Quick Assist</em> requires Windows 10 or Windows 11. You can still copy the quick device check below.",
+          fbSum: "If nothing opens when you click",
+          fb1: "<strong>Option 1 (Keyboard):</strong> Press <kbd>Windows key</kbd> + <kbd>Ctrl</kbd> + <kbd>Q</kbd> together.",
+          fb2: "<strong>Option 2 (Start Menu):</strong> Press the <kbd>Windows key</kbd>, type <strong>Quick Assist</strong>, and press <kbd>Enter</kbd>.",
+          fb3: "<strong>Option 3 (Microsoft Store update):</strong> If Windows says the app is missing or needs an update, open it directly in the official Microsoft Store:",
+          storeApp: "Open in Microsoft Store",
+          storeWeb: "Store page in browser",
+          probeSum: "Quick check of this device (browser read-only)",
+          probeDesc: "These basic readings come straight from your browser. Nothing is sent automatically — clicking “Copy” simply places the summary on your clipboard.",
+          copyProbe: "Copy quick check",
+          probeHeader: "=== AVICARY BROWSER QUICK CHECK ===",
+          winSum: "Direct Windows Settings links (if we check them together)",
+          winDesc: "One click opens the exact Windows Settings screen directly without hunting through menus:",
+          winStorage: "Check storage space",
+          winAbout: "Show system info",
+          winUpdate: "Windows Update",
+          helperSum: "For the helper: Avicary read-only triage after connecting",
+          helperDesc: "Run only <strong>after you are connected via Quick Assist</strong>. Open <strong>PowerShell</strong> on the target PC (no Admin needed) and run this read-only command:",
+          copyHelper: "Copy command",
+          helperSrc: "View script source (triage.ps1)",
+          helperNote: "The script only reads system specs, disk space, drive health, and the last 14 days of event logs, saves <code>Avicary-Bericht-….txt</code> to the Desktop, and copies the report to the clipboard.",
+          footer: "<strong>Avicary</strong> · Cordaves · Static local helper page · No cookies · No third-party data transfer",
+          themeToDark: "Dark",
+          themeToLight: "Light",
+          copied: "✓ Copied!",
+          copyFallback: "Please select and copy manually.",
+          labels: {
+            system: "System",
+            browser: "Browser",
+            screen: "Display",
+            cpu: "CPU cores",
+            ram: "RAM (browser cap)",
+            gpu: "Graphics",
+            net: "Connection",
+            clock: "System clock",
+            power: "Power"
+          },
+          vals: {
+            unknown: "Unknown",
+            unknownBrowser: "Unknown browser",
+            na: "Unavailable",
+            unreported: "Not reported",
+            scale: "scale",
+            cores: "cores",
+            ramApprox: "approx. {n} GB (capped at 8 GB)",
+            online: "Online",
+            offline: "Offline",
+            charging: "Plugged in / charging",
+            battery: "On battery",
+            locale: "en-GB"
+          }
+        }
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      let currentLang = params.get("lang") === "en" ? "en" : "de";
+      let currentTheme = params.get("theme") === "dark" ? "dark" : "light";
+
       const ua = navigator.userAgent || "";
       const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
       const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.userAgentData && navigator.userAgentData.mobile);
@@ -510,20 +756,24 @@
         document.getElementById("win-shortcuts").classList.add("hidden");
       }
 
-      function getGpuInfo() {
+      let detectedWinName = null;
+      let detectedBattery = null;
+
+      function getGpuInfo(v) {
         try {
           const canvas = document.createElement("canvas");
           const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-          if (!gl) return "Nicht verfügbar";
+          if (!gl) return v.na;
           const ext = gl.getExtension("WEBGL_debug_renderer_info");
           if (!ext) return gl.getParameter(gl.RENDERER) || "Standard";
           return gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || "Standard";
         } catch (_) {
-          return "Nicht verfügbar";
+          return v.na;
         }
       }
 
-      function detectOsLabel() {
+      function detectOsLabel(v) {
+        if (detectedWinName) return detectedWinName;
         if (/Windows NT 10\.0/i.test(ua)) return "Windows 10 / 11";
         if (/Windows NT 6\.3/i.test(ua)) return "Windows 8.1";
         if (/Windows NT 6\.1/i.test(ua)) return "Windows 7";
@@ -531,38 +781,48 @@
         if (/Android/i.test(ua)) return "Android";
         if (/iPhone|iPad/i.test(ua)) return "iOS / iPadOS";
         if (/Linux/i.test(ua)) return "Linux";
-        return platform || "Unbekannt";
+        return platform || v.unknown;
       }
 
-      function detectBrowser() {
+      function detectBrowser(v) {
         if (/Edg\//i.test(ua)) return "Microsoft Edge";
         if (/Firefox\//i.test(ua)) return "Mozilla Firefox";
         if (/Chrome\//i.test(ua)) return "Google Chrome";
         if (/Safari\//i.test(ua)) return "Apple Safari";
-        return "Unbekannter Browser";
+        return v.unknownBrowser;
       }
 
-      const dpr = Math.round((window.devicePixelRatio || 1) * 100);
-      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      const netText = navigator.onLine
-        ? (conn && conn.effectiveType ? "Online (" + conn.effectiveType + (conn.rtt ? ", ~" + conn.rtt + " ms" : "") + ")" : "Online")
-        : "Offline";
+      function buildProbeRows() {
+        const t = I18N[currentLang];
+        const l = t.labels;
+        const v = t.vals;
+        const dpr = Math.round((window.devicePixelRatio || 1) * 100);
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const netText = navigator.onLine
+          ? (conn && conn.effectiveType ? v.online + " (" + conn.effectiveType + (conn.rtt ? ", ~" + conn.rtt + " ms" : "") + ")" : v.online)
+          : v.offline;
 
-      const probeRows = [
-        ["System", detectOsLabel()],
-        ["Browser", detectBrowser()],
-        ["Bildschirm", window.screen.width + " × " + window.screen.height + " (Skalierung " + dpr + " %)"],
-        ["CPU-Kerne", navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " Kerne" : "Nicht gemeldet"],
-        ["RAM (Browser-Angabe)", navigator.deviceMemory ? "ca. " + navigator.deviceMemory + " GB (max. 8 GB sichtbar)" : "Nicht gemeldet"],
-        ["Grafik", getGpuInfo()],
-        ["Verbindung", netText],
-        ["Systemzeit", new Date().toLocaleString("de-DE")]
-      ];
+        const rows = [
+          [l.system, detectOsLabel(v)],
+          [l.browser, detectBrowser(v)],
+          [l.screen, window.screen.width + " × " + window.screen.height + " (" + v.scale + " " + dpr + " %)"],
+          [l.cpu, navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " " + v.cores : v.unreported],
+          [l.ram, navigator.deviceMemory ? v.ramApprox.replace("{n}", navigator.deviceMemory) : v.unreported],
+          [l.gpu, getGpuInfo(v)],
+          [l.net, netText],
+          [l.clock, new Date().toLocaleString(v.locale)]
+        ];
+        if (detectedBattery) {
+          const st = detectedBattery.charging ? v.charging : v.battery;
+          rows.push([l.power, st + " (" + detectedBattery.pct + " %)"]);
+        }
+        return rows;
+      }
 
-      const grid = document.getElementById("probe-grid");
       function renderProbe() {
+        const grid = document.getElementById("probe-grid");
         grid.innerHTML = "";
-        probeRows.forEach(function (pair) {
+        buildProbeRows().forEach(function (pair) {
           const box = document.createElement("div");
           box.className = "probe-item";
           const lbl = document.createElement("span");
@@ -576,7 +836,67 @@
           grid.appendChild(box);
         });
       }
-      renderProbe();
+
+      function applyTheme(theme) {
+        currentTheme = theme;
+        document.documentElement.setAttribute("data-theme", theme);
+        const btn = document.getElementById("theme-toggle");
+        const icon = document.getElementById("theme-icon");
+        const label = document.getElementById("theme-label");
+        const t = I18N[currentLang];
+        const isDark = theme === "dark";
+        btn.setAttribute("aria-pressed", isDark ? "true" : "false");
+        label.textContent = isDark ? t.themeToLight : t.themeToDark;
+        if (isDark) {
+          icon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>';
+        } else {
+          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+        }
+      }
+
+      function applyLang(lang) {
+        currentLang = lang;
+        const t = I18N[lang];
+        document.documentElement.lang = lang;
+        document.title = t.title;
+
+        document.getElementById("lang-de").setAttribute("aria-pressed", lang === "de" ? "true" : "false");
+        document.getElementById("lang-en").setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+
+        document.getElementById("t-heading").textContent = t.heading;
+        document.getElementById("t-subtitle").textContent = t.subtitle;
+        document.getElementById("t-cta").textContent = t.cta;
+        document.getElementById("t-step-1").innerHTML = t.step1;
+        document.getElementById("t-step-2").innerHTML = t.step2;
+        document.getElementById("t-step-3").innerHTML = t.step3;
+        document.getElementById("t-trust").innerHTML = t.trust;
+        document.getElementById("t-mobile-text").innerHTML = t.mobile;
+        document.getElementById("copy-page-url").textContent = t.copyUrl;
+        document.getElementById("t-nonwin-text").innerHTML = t.nonwin;
+        document.getElementById("t-fb-sum").textContent = t.fbSum;
+        document.getElementById("t-fb-1").innerHTML = t.fb1;
+        document.getElementById("t-fb-2").innerHTML = t.fb2;
+        document.getElementById("t-fb-3").textContent = t.fb3;
+        document.getElementById("t-store-app").textContent = t.storeApp;
+        document.getElementById("t-store-web").textContent = t.storeWeb;
+        document.getElementById("t-probe-sum").textContent = t.probeSum;
+        document.getElementById("t-probe-desc").textContent = t.probeDesc;
+        document.getElementById("copy-probe").textContent = t.copyProbe;
+        document.getElementById("t-win-sum").textContent = t.winSum;
+        document.getElementById("t-win-desc").textContent = t.winDesc;
+        document.getElementById("t-win-storage").textContent = t.winStorage;
+        document.getElementById("t-win-about").textContent = t.winAbout;
+        document.getElementById("t-win-update").textContent = t.winUpdate;
+        document.getElementById("t-helper-sum").textContent = t.helperSum;
+        document.getElementById("t-helper-desc").innerHTML = t.helperDesc;
+        document.getElementById("copy-helper").textContent = t.copyHelper;
+        document.getElementById("t-helper-src").textContent = t.helperSrc;
+        document.getElementById("t-helper-note").innerHTML = t.helperNote;
+        document.getElementById("t-footer").innerHTML = t.footer;
+
+        applyTheme(currentTheme);
+        renderProbe();
+      }
 
       if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
         navigator.userAgentData.getHighEntropyValues(["platformVersion", "architecture"]).then(function (info) {
@@ -585,7 +905,7 @@
             if (!isNaN(major)) {
               const winName = major >= 13 ? "Windows 11" : "Windows 10";
               const arch = info.architecture ? " (" + info.architecture + ")" : "";
-              probeRows[0][1] = winName + arch;
+              detectedWinName = winName + arch;
               renderProbe();
             }
           }
@@ -594,9 +914,7 @@
 
       if (navigator.getBattery) {
         navigator.getBattery().then(function (bat) {
-          const pct = Math.round(bat.level * 100) + " %";
-          const state = bat.charging ? "Netzbetrieb / lädt" : "Akkubetrieb";
-          probeRows.push(["Stromversorgung", state + " (" + pct + ")"]);
+          detectedBattery = { pct: Math.round(bat.level * 100), charging: bat.charging };
           renderProbe();
         }).catch(function () {});
       }
@@ -607,9 +925,10 @@
       document.getElementById("helper-cmd").textContent = helperCommand;
 
       function copyText(text, statusEl) {
+        const t = I18N[currentLang];
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).then(function () {
-            statusEl.textContent = "✓ Kopiert!";
+            statusEl.textContent = t.copied;
             setTimeout(function () { statusEl.textContent = ""; }, 3000);
           }).catch(function () {
             fallbackCopy(text, statusEl);
@@ -620,6 +939,7 @@
       }
 
       function fallbackCopy(text, statusEl) {
+        const t = I18N[currentLang];
         const ta = document.createElement("textarea");
         ta.value = text;
         ta.style.position = "fixed";
@@ -628,16 +948,23 @@
         ta.select();
         try {
           document.execCommand("copy");
-          statusEl.textContent = "✓ Kopiert!";
+          statusEl.textContent = t.copied;
         } catch (_) {
-          statusEl.textContent = "Bitte manuell markieren & kopieren.";
+          statusEl.textContent = t.copyFallback;
         }
         document.body.removeChild(ta);
         setTimeout(function () { statusEl.textContent = ""; }, 3500);
       }
 
+      document.getElementById("lang-de").addEventListener("click", function () { applyLang("de"); });
+      document.getElementById("lang-en").addEventListener("click", function () { applyLang("en"); });
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        applyTheme(currentTheme === "dark" ? "light" : "dark");
+      });
+
       document.getElementById("copy-probe").addEventListener("click", function () {
-        const text = "=== AVICARY BROWSER KURZ-CHECK ===\n" + probeRows.map(function (r) {
+        const t = I18N[currentLang];
+        const text = t.probeHeader + "\n" + buildProbeRows().map(function (r) {
           return r[0] + ": " + r[1];
         }).join("\n");
         copyText(text, document.getElementById("copy-probe-status"));
@@ -647,12 +974,11 @@
         copyText(helperCommand, document.getElementById("copy-helper-status"));
       });
 
-      const copyUrlBtn = document.getElementById("copy-page-url");
-      if (copyUrlBtn) {
-        copyUrlBtn.addEventListener("click", function () {
-          copyText(window.location.href, document.getElementById("copy-url-status"));
-        });
-      }
+      document.getElementById("copy-page-url").addEventListener("click", function () {
+        copyText(window.location.href, document.getElementById("copy-url-status"));
+      });
+
+      applyLang(currentLang);
     })();
   </script>
 </body>
