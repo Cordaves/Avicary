@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Avicary · Cordaves – Schnelle Computer-Hilfe</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="avicary-logo.svg">
+  <style>
+    /* Cordaves Palette — Deep Blue (#0135A8, Logo Blade 2) primary accent on Paper */
+    :root {
+      --paper: #f8faf7;
+      --surface: #ffffff;
+      --surface-soft: #f2f4f0;
+      --border: #dce0da;
+      --ink: #0e0f12;
+      --text: #131313;
+      --muted: #3e3f42;
+      --deep-blue: #0135a8;
+      --deep-blue-hover: #012880;
+      --deep-blue-soft: #e9effc;
+      --deep-blue-ring: rgba(1, 53, 168, 0.25);
+      --navy: #1a2440;
+      --ok-bg: #eef7f2;
+      --ok-border: #bddac9;
+      --ok-text: #02592a;
+      --warn-bg: #fdf6e9;
+      --warn-border: #e6c68a;
+      --warn-text: #6e4508;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 28px 16px 52px;
+      font-family: "Archivo", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+      background: var(--paper);
+      color: var(--text);
+      font-size: 19px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 30px;
+      box-shadow: 0 4px 20px rgba(26, 36, 64, 0.055);
+      overflow-wrap: break-word;
+    }
+
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .brand-by {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--deep-blue-soft);
+      color: var(--deep-blue);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(1.75rem, 4vw, 2.15rem);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    p { margin: 0 0 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.04rem;
+      margin-bottom: 26px;
+    }
+
+    .banner {
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      border: 1px solid var(--warn-border);
+      background: var(--warn-bg);
+      color: var(--warn-text);
+      font-size: 0.96rem;
+    }
+
+    .banner.ok {
+      border-color: var(--ok-border);
+      background: var(--ok-bg);
+      color: var(--ok-text);
+      margin-top: 24px;
+      margin-bottom: 0;
+    }
+
+    .hidden { display: none !important; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 20px 26px;
+      border-radius: 14px;
+      background: var(--deep-blue);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1.28rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(1, 53, 168, 0.26);
+      transition: background 0.15s ease, transform 0.08s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      background: var(--deep-blue-hover);
+      outline: 4px solid var(--deep-blue-ring);
+      outline-offset: 2px;
+    }
+
+    .btn-primary:active { transform: translateY(1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 17px;
+      border-radius: 10px;
+      background: var(--surface-soft);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.96rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      background: var(--deep-blue-soft);
+      border-color: var(--deep-blue);
+      outline: 3px solid var(--deep-blue-ring);
+      outline-offset: 1px;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--deep-blue-soft);
+      color: var(--deep-blue);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    kbd {
+      display: inline-block;
+      padding: 2px 8px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.9em;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      color: var(--text);
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      padding: 16px 20px;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.01rem;
+      color: var(--ink);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::after {
+      content: "▾";
+      font-size: 1.15rem;
+      color: var(--muted);
+      transition: transform 0.15s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .details-body {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 0.96rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .probe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin: 14px 0 16px;
+    }
+
+    .probe-item {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .probe-label {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .probe-val {
+      font-weight: 600;
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+
+    .code-box {
+      background: var(--navy);
+      color: #f3f1ec;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.88rem;
+      overflow-x: auto;
+      margin: 10px 0 12px;
+      user-select: all;
+    }
+
+    .status-note {
+      font-size: 0.92rem;
+      color: var(--ok-text);
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-top: 6px;
+    }
+
+    .footer-note strong {
+      color: var(--deep-blue);
+      font-weight: 700;
+    }
+
+    @media (max-width: 540px) {
+      body { padding: 14px 12px 36px; font-size: 17px; }
+      .card { padding: 22px 20px; }
+      .btn-primary { font-size: 1.15rem; padding: 18px 18px; }
+      .brand-badge { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Hauptkarte -->
+    <section class="card">
+      <div class="brand-lockup">
+        <div class="brand-left">
+          <svg class="brand-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Avicary Logo">
+            <polygon fill="#1A2440" points="33.5,6 56,56 44.5,56 31.2,24.5" />
+            <polygon fill="#02592A" points="30.6,7.5 29.5,20.2 25.4,28.2 14.5,31.2" />
+            <polygon fill="#0135A8" points="24.5,31.2 22.0,39.0 9.5,41.6 13.4,34.0" />
+            <polygon fill="#531395" points="35.6,39.5 38.6,45.8 7.5,49.8 11.4,43.8" />
+            <polygon fill="#B0122E" points="29.8,49.6 24.8,56 8.0,56 9.6,52.4" />
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-name">Avicary</span>
+            <span class="brand-by">by Cordaves</span>
+          </div>
+        </div>
+        <span class="brand-badge">Diagnose · Nur Lesezugriff</span>
+      </div>
+
+      <h1>Schnelle Computer-Hilfe</h1>
+      <p class="subtitle">
+        Sichere Bildschirm-Hilfe über die eingebaute Windows-Funktion – ohne Download und ohne Installation.
+      </p>
+
+      <!-- Hinweis bei Mobilgerät -->
+      <div id="mobile-banner" class="banner hidden" role="alert">
+        <strong>Hinweis:</strong> Sie öffnen diese Seite gerade auf einem Handy oder Tablet.<br>
+        Bitte öffnen Sie diesen Link am <strong>Windows-Computer bzw. Notebook</strong>, damit die Remotehilfe direkt starten kann.
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" id="copy-page-url">Link dieser Seite kopieren</button>
+          <span id="copy-url-status" class="status-note" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <!-- Hinweis bei Mac / Linux -->
+      <div id="nonwin-banner" class="banner hidden" role="status">
+        <strong>Hinweis:</strong> Diese Seite wurde nicht auf einem Windows-Computer geöffnet. Die eingebaute <em>Windows-Remotehilfe</em> funktioniert nur unter Windows 10 oder Windows 11. Unten können Sie trotzdem den kurzen Geräte-Check kopieren.
+      </div>
+
+      <!-- Hauptknopf -->
+      <div id="win-action">
+        <a href="ms-quick-assist:" class="btn-primary" id="launch-qa">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span>Remotehilfe starten</span>
+        </a>
+
+        <ol class="steps">
+          <li>
+            <span class="step-num">1</span>
+            <div>Klicken Sie oben auf <strong>„Remotehilfe starten“</strong>.</div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>Ihr Browser fragt kurz <em>„Remotehilfe öffnen?“</em> – klicken Sie dort auf <strong>„Öffnen“</strong>.</div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>Tippen Sie den <strong>6-stelligen Code</strong> ein, den ich Ihnen am Telefon sage, und bestätigen Sie mit <strong>„Zulassen“</strong>.</div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="banner ok">
+        <strong>Sicher &amp; transparent:</strong> Sie sehen die ganze Zeit alles auf Ihrem Bildschirm mit und können die Verbindung jederzeit sofort beenden. Es wird nichts dauerhaft installiert.
+      </div>
+    </section>
+
+    <!-- Fallback bei Problemen -->
+    <details>
+      <summary>Falls sich beim Klicken nichts öffnet</summary>
+      <div class="details-body">
+        <p>
+          <strong>Möglichkeit 1 (Tastatur):</strong> Drücken Sie gleichzeitig
+          <kbd>Windows-Taste</kbd> + <kbd>Strg</kbd> + <kbd>Q</kbd>.
+        </p>
+        <p>
+          <strong>Möglichkeit 2 (Startmenü):</strong> Drücken Sie die <kbd>Windows-Taste</kbd>, tippen Sie
+          <strong>Remotehilfe</strong> ein und drücken Sie <kbd>Enter</kbd>.
+        </p>
+        <p>
+          <strong>Möglichkeit 3 (Update aus dem Microsoft Store):</strong> Falls Windows meldet, dass die App fehlt oder aktualisiert werden muss, öffnen Sie sie direkt im offiziellen Microsoft Store:
+        </p>
+        <div class="btn-row">
+          <a href="ms-windows-store://pdp/?ProductId=9P7BP5VNWKX5" class="btn-secondary">Im Microsoft Store öffnen</a>
+          <a href="https://apps.microsoft.com/detail/9p7bp5vnwkx5" target="_blank" rel="noopener noreferrer" class="btn-secondary">Store-Seite im Browser</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Passiver Browser-Kurzcheck -->
+    <details>
+      <summary>Kurz-Check dieses Geräts (nur Lesezugriff im Browser)</summary>
+      <div class="details-body">
+        <p style="color: var(--muted);">
+          Diese Basisdaten zeigt Ihr Browser von selbst an. Nichts davon wird automatisch versendet – erst wenn Sie unten auf „Kopieren“ klicken, liegt der Text in Ihrer Zwischenablage.
+        </p>
+        <div id="probe-grid" class="probe-grid"></div>
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" id="copy-probe">Kurz-Check kopieren</button>
+          <span id="copy-probe-status" class="status-note" aria-live="polite"></span>
+        </div>
+      </div>
+    </details>
+
+    <!-- Hilfreiche Windows-Einstellungen -->
+    <details id="win-shortcuts">
+      <summary>Direktlinks zu Windows-Einstellungen (falls wir sie gemeinsam prüfen)</summary>
+      <div class="details-body">
+        <p style="color: var(--muted);">
+          Mit einem Klick öffnen sich die jeweiligen Windows-Einstellungen direkt, ohne Suchen im Menü:
+        </p>
+        <div class="btn-row">
+          <a href="ms-settings:storagesense" class="btn-secondary">Speicherplatz prüfen</a>
+          <a href="ms-settings:about" class="btn-secondary">System-Infos anzeigen</a>
+          <a href="ms-settings:windowsupdate" class="btn-secondary">Windows-Update</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Nur für den Helfer -->
+    <details>
+      <summary style="color: var(--muted); font-weight: 500; font-size: 0.94rem;">Für den Helfer: Avicary-Diagnose nach dem Verbinden</summary>
+      <div class="details-body">
+        <p>
+          Erst ausführen, <strong>nachdem Sie per Remotehilfe verbunden sind</strong>. Öffnen Sie auf dem Ziel-PC <strong>PowerShell</strong> (kein Admin nötig) und führen Sie diesen Nur-Lese-Befehl aus:
+        </p>
+        <div id="helper-cmd" class="code-box"></div>
+        <div class="btn-row">
+          <button type="button" class="btn-secondary" id="copy-helper">Befehl kopieren</button>
+          <a href="triage.ps1" target="_blank" rel="noopener noreferrer" class="btn-secondary">Skript-Quelltext ansehen (triage.ps1)</a>
+          <span id="copy-helper-status" class="status-note" aria-live="polite"></span>
+        </div>
+        <p style="margin-top: 12px; color: var(--muted); font-size: 0.9rem;">
+          Das Skript liest ausschließlich Systeminfos, Speicherplatz, Festplattenstatus und die Ereignisprotokolle der letzten 14 Tage aus, speichert <code>Avicary-Bericht-….txt</code> auf dem Desktop und kopiert den Bericht in die Zwischenablage.
+        </p>
+      </div>
+    </details>
+
+    <p class="footer-note">
+      <strong>Avicary</strong> · Cordaves · Rein lokale Hilfeseite · Keine Cookies · Keine Datenübertragung an Dritte
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      const ua = navigator.userAgent || "";
+      const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.userAgentData && navigator.userAgentData.mobile);
+      const isWindows = !isMobile && (/Win/i.test(platform) || /Windows/i.test(ua));
+
+      if (isMobile) {
+        document.getElementById("mobile-banner").classList.remove("hidden");
+        document.getElementById("win-shortcuts").classList.add("hidden");
+      } else if (!isWindows) {
+        document.getElementById("nonwin-banner").classList.remove("hidden");
+        document.getElementById("win-shortcuts").classList.add("hidden");
+      }
+
+      function getGpuInfo() {
+        try {
+          const canvas = document.createElement("canvas");
+          const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+          if (!gl) return "Nicht verfügbar";
+          const ext = gl.getExtension("WEBGL_debug_renderer_info");
+          if (!ext) return gl.getParameter(gl.RENDERER) || "Standard";
+          return gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || "Standard";
+        } catch (_) {
+          return "Nicht verfügbar";
+        }
+      }
+
+      function detectOsLabel() {
+        if (/Windows NT 10\.0/i.test(ua)) return "Windows 10 / 11";
+        if (/Windows NT 6\.3/i.test(ua)) return "Windows 8.1";
+        if (/Windows NT 6\.1/i.test(ua)) return "Windows 7";
+        if (/Mac OS X/i.test(ua)) return "macOS";
+        if (/Android/i.test(ua)) return "Android";
+        if (/iPhone|iPad/i.test(ua)) return "iOS / iPadOS";
+        if (/Linux/i.test(ua)) return "Linux";
+        return platform || "Unbekannt";
+      }
+
+      function detectBrowser() {
+        if (/Edg\//i.test(ua)) return "Microsoft Edge";
+        if (/Firefox\//i.test(ua)) return "Mozilla Firefox";
+        if (/Chrome\//i.test(ua)) return "Google Chrome";
+        if (/Safari\//i.test(ua)) return "Apple Safari";
+        return "Unbekannter Browser";
+      }
+
+      const dpr = Math.round((window.devicePixelRatio || 1) * 100);
+      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      const netText = navigator.onLine
+        ? (conn && conn.effectiveType ? "Online (" + conn.effectiveType + (conn.rtt ? ", ~" + conn.rtt + " ms" : "") + ")" : "Online")
+        : "Offline";
+
+      const probeRows = [
+        ["System", detectOsLabel()],
+        ["Browser", detectBrowser()],
+        ["Bildschirm", window.screen.width + " × " + window.screen.height + " (Skalierung " + dpr + " %)"],
+        ["CPU-Kerne", navigator.hardwareConcurrency ? navigator.hardwareConcurrency + " Kerne" : "Nicht gemeldet"],
+        ["RAM (Browser-Angabe)", navigator.deviceMemory ? "ca. " + navigator.deviceMemory + " GB (max. 8 GB sichtbar)" : "Nicht gemeldet"],
+        ["Grafik", getGpuInfo()],
+        ["Verbindung", netText],
+        ["Systemzeit", new Date().toLocaleString("de-DE")]
+      ];
+
+      const grid = document.getElementById("probe-grid");
+      function renderProbe() {
+        grid.innerHTML = "";
+        probeRows.forEach(function (pair) {
+          const box = document.createElement("div");
+          box.className = "probe-item";
+          const lbl = document.createElement("span");
+          lbl.className = "probe-label";
+          lbl.textContent = pair[0];
+          const val = document.createElement("div");
+          val.className = "probe-val";
+          val.textContent = pair[1];
+          box.appendChild(lbl);
+          box.appendChild(val);
+          grid.appendChild(box);
+        });
+      }
+      renderProbe();
+
+      if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+        navigator.userAgentData.getHighEntropyValues(["platformVersion", "architecture"]).then(function (info) {
+          if (isWindows && info.platformVersion) {
+            const major = parseInt(info.platformVersion.split(".")[0], 10);
+            if (!isNaN(major)) {
+              const winName = major >= 13 ? "Windows 11" : "Windows 10";
+              const arch = info.architecture ? " (" + info.architecture + ")" : "";
+              probeRows[0][1] = winName + arch;
+              renderProbe();
+            }
+          }
+        }).catch(function () {});
+      }
+
+      if (navigator.getBattery) {
+        navigator.getBattery().then(function (bat) {
+          const pct = Math.round(bat.level * 100) + " %";
+          const state = bat.charging ? "Netzbetrieb / lädt" : "Akkubetrieb";
+          probeRows.push(["Stromversorgung", state + " (" + pct + ")"]);
+          renderProbe();
+        }).catch(function () {});
+      }
+
+      const baseUrl = window.location.href.split(/[?#]/)[0].replace(/index\.html$/i, "");
+      const scriptUrl = (baseUrl.endsWith("/") ? baseUrl : baseUrl + "/") + "triage.ps1";
+      const helperCommand = "irm '" + scriptUrl + "' | iex";
+      document.getElementById("helper-cmd").textContent = helperCommand;
+
+      function copyText(text, statusEl) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            statusEl.textContent = "✓ Kopiert!";
+            setTimeout(function () { statusEl.textContent = ""; }, 3000);
+          }).catch(function () {
+            fallbackCopy(text, statusEl);
+          });
+        } else {
+          fallbackCopy(text, statusEl);
+        }
+      }
+
+      function fallbackCopy(text, statusEl) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          statusEl.textContent = "✓ Kopiert!";
+        } catch (_) {
+          statusEl.textContent = "Bitte manuell markieren & kopieren.";
+        }
+        document.body.removeChild(ta);
+        setTimeout(function () { statusEl.textContent = ""; }, 3500);
+      }
+
+      document.getElementById("copy-probe").addEventListener("click", function () {
+        const text = "=== AVICARY BROWSER KURZ-CHECK ===\n" + probeRows.map(function (r) {
+          return r[0] + ": " + r[1];
+        }).join("\n");
+        copyText(text, document.getElementById("copy-probe-status"));
+      });
+
+      document.getElementById("copy-helper").addEventListener("click", function () {
+        copyText(helperCommand, document.getElementById("copy-helper-status"));
+      });
+
+      const copyUrlBtn = document.getElementById("copy-page-url");
+      if (copyUrlBtn) {
+        copyUrlBtn.addEventListener("click", function () {
+          copyText(window.location.href, document.getElementById("copy-url-status"));
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
