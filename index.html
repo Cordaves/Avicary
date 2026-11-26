@@ -149,6 +149,87 @@
       border-color: var(--deep-blue);
     }
 
+    .help-btn {
+      min-width: 44px;
+      padding: 8px 12px;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .help-btn[aria-expanded="true"] {
+      background: var(--deep-blue-soft);
+      border-color: var(--deep-blue);
+      color: var(--step-text);
+    }
+
+    .about-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--deep-blue);
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow-card);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .about-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .about-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .about-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .about-close:hover,
+    .about-close:focus-visible {
+      color: var(--ink);
+      border-color: var(--deep-blue);
+      background: var(--deep-blue-soft);
+      outline: 3px solid var(--deep-blue-ring);
+      outline-offset: 1px;
+    }
+
+    .about-list {
+      margin: 10px 0 12px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .about-foot {
+      margin: 0;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -494,7 +575,19 @@
         </svg>
         <span id="theme-label">Dunkel</span>
       </button>
+      <button type="button" class="util-btn theme-btn help-btn" id="about-toggle" aria-expanded="false" aria-controls="about-panel" aria-label="Was ist Avicary?" title="Was ist Avicary?">
+        <span aria-hidden="true">?</span>
+      </button>
     </div>
+
+    <!-- Kurzerklärung (öffnet sich über ?) -->
+    <section id="about-panel" class="about-panel hidden" role="region" aria-labelledby="t-about-title">
+      <div class="about-header">
+        <h2 class="about-title" id="t-about-title">Was ist Avicary?</h2>
+        <button type="button" class="about-close" id="about-close" aria-label="Schließen" title="Schließen">×</button>
+      </div>
+      <div id="t-about-body"></div>
+    </section>
 
     <!-- Hauptkarte -->
     <section class="card">
@@ -668,6 +761,10 @@
           footer: "<strong>Avicary</strong> · Cordaves · Rein lokale Hilfeseite · Keine Cookies · Keine Datenübertragung an Dritte",
           themeToDark: "Dunkel",
           themeToLight: "Hell",
+          aboutLabel: "Was ist Avicary?",
+          aboutClose: "Schließen",
+          aboutTitle: "Was ist Avicary?",
+          aboutBody: "<p><strong>Avicary</strong> ist ein kleines, unkompliziertes Hilfs-Tool für direkte <strong>Windows-zu-Windows-Fernhilfe</strong> – ideal, wenn man z. B. Eltern, Familie oder Freunden aus der Ferne am PC helfen möchte, ohne am Telefon erst Downloads, Installationen oder versteckte Menüs erklären zu müssen.</p><ol class=\"about-list\"><li><strong>Mit einem Klick verbinden:</strong> Auf dem eigenen Windows-PC die eingebaute <strong>Remotehilfe</strong> öffnen (<kbd>Win</kbd> + <kbd>Strg</kbd> + <kbd>Q</kbd>), den 6-stelligen Code erzeugen und diesen Link schicken. Ein großer Button oben startet direkt die Remotehilfe – ganz ohne Download, Installation oder verunsichernde Warnmeldungen.</li><li><strong>Optionaler Schnell-Check:</strong> Einmal verbunden, lässt sich bei Bedarf direkt in <strong>PowerShell</strong> (kein Admin nötig) ein Diagnose-Kurzbericht starten – einfach unten unter <em>„Für den Helfer“</em> <strong>DE oder EN</strong> wählen und den Einzeiler ausführen.</li><li><strong>Klarer Überblick in Sekunden:</strong> Speichert <code>Avicary-Bericht-….txt</code> (bzw. <code>Avicary-Report-….txt</code>) auf dem Desktop und in der Zwischenablage – mit verständlichen Hinweisen zu System, RAM, internen/USB-Laufwerken &amp; Energiesparmodus, Abstürzen/Fehlern (14 Tage) sowie InDesign- &amp; Backup-Check.</li></ol><p class=\"about-foot\"><strong>Sicher, behutsam &amp; transparent:</strong> 100 % nur lesend, nichts wird dauerhaft installiert, kein Tracking und kein Upload. Der komplette Quelltext ist direkt auf der Seite einsehbar – und die unterstützte Person sieht jederzeit live mit und behält die volle Kontrolle.</p>",
           copied: "✓ Kopiert!",
           copyFallback: "Bitte manuell markieren & kopieren.",
           labels: {
@@ -732,6 +829,10 @@
           footer: "<strong>Avicary</strong> · Cordaves · Static local helper page · No cookies · No third-party data transfer",
           themeToDark: "Dark",
           themeToLight: "Light",
+          aboutLabel: "What is Avicary?",
+          aboutClose: "Close",
+          aboutTitle: "What is Avicary?",
+          aboutBody: "<p><strong>Avicary</strong> is a simple, friendly tool for direct <strong>Windows-to-Windows</strong> remote support — made for moments like helping parents, family, or friends from afar without having to talk them through downloads, installs, or hidden menus.</p><ol class=\"about-list\"><li><strong>Connect in one click:</strong> Open Windows' built-in <strong>Quick Assist</strong> (<kbd>Win</kbd> + <kbd>Ctrl</kbd> + <kbd>Q</kbd>) on your Windows PC to get a 6-digit code, and share this link. One big button above opens Quick Assist straight on their screen — no downloads, no installs, no scary warnings.</li><li><strong>Optional quick check:</strong> Once connected, if you want a fast look under the hood, open <strong>PowerShell</strong> on their PC (no Admin needed), toggle <strong>EN / DE</strong> under <em>“For the helper”</em> below, and run the copied one-liner.</li><li><strong>Instant summary:</strong> Within seconds it saves <code>Avicary-Report-….txt</code> (or <code>Avicary-Bericht-….txt</code>) to the Desktop and clipboard with clear flags for system health, RAM, internal/USB drives &amp; sleep settings, recent crashes/errors (14 days), plus InDesign &amp; backup checks.</li></ol><p class=\"about-foot\"><strong>Safe, gentle &amp; transparent:</strong> 100% read-only, nothing gets installed, no tracking or uploads, the full script is viewable on this page, and the person you're helping watches live and stays in control the whole time.</p>",
           copied: "✓ Copied!",
           copyFallback: "Please select and copy manually.",
           labels: {
@@ -935,6 +1036,14 @@
         document.getElementById("copy-helper").textContent = t.copyHelper;
         document.getElementById("t-helper-src").textContent = t.helperSrc;
         document.getElementById("t-footer").innerHTML = t.footer;
+        const aboutToggleEl = document.getElementById("about-toggle");
+        aboutToggleEl.setAttribute("aria-label", t.aboutLabel);
+        aboutToggleEl.title = t.aboutLabel;
+        const aboutCloseEl = document.getElementById("about-close");
+        aboutCloseEl.setAttribute("aria-label", t.aboutClose);
+        aboutCloseEl.title = t.aboutClose;
+        document.getElementById("t-about-title").textContent = t.aboutTitle;
+        document.getElementById("t-about-body").innerHTML = t.aboutBody;
 
         if (!reportLangManual) {
           reportLang = lang;
@@ -1009,6 +1118,26 @@
       });
       document.getElementById("theme-toggle").addEventListener("click", function () {
         applyTheme(currentTheme === "dark" ? "light" : "dark");
+      });
+
+      const aboutPanel = document.getElementById("about-panel");
+      const aboutToggle = document.getElementById("about-toggle");
+      function setAboutOpen(open) {
+        aboutPanel.classList.toggle("hidden", !open);
+        aboutToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      aboutToggle.addEventListener("click", function () {
+        setAboutOpen(aboutPanel.classList.contains("hidden"));
+      });
+      document.getElementById("about-close").addEventListener("click", function () {
+        setAboutOpen(false);
+        aboutToggle.focus();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !aboutPanel.classList.contains("hidden")) {
+          setAboutOpen(false);
+          aboutToggle.focus();
+        }
       });
 
       document.getElementById("copy-probe").addEventListener("click", function () {
